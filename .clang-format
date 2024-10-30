@@ -1,0 +1,13 @@
+# .clang-format
+BasedOnStyle: LLVM
+ColumnLimit: 120                # Increase the column limit to allow longer lines
+PenaltyReturnTypeOnItsOwnLine: 1000  # Higher penalty for breaking return type onto its own line
+
+AlignAfterOpenBracket: DontAlign  # Optional: This can help keep function arguments on the same line
+
+# Additional settings you might want to tweak
+AllowShortFunctionsOnASingleLine: Empty  # Optional: Keeps small functions on one line
+BreakBeforeBraces: Allman                # Optional: Control brace placement
+
+# Adjust this value based on your preference to keep arguments on the same line.
+PenaltyBreakBeforeFirstCallParameter: 19
