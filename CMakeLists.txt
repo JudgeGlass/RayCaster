@@ -26,4 +26,7 @@ add_executable(RayCaster
     src/Components/Graphics.cpp
 
     src/Game/Game.cpp
+    src/Game/Player.cpp
+    src/Game/Viewport.cpp
+    src/Game/Level.cpp
 )

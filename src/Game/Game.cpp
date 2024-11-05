@@ -31,13 +31,26 @@ static constexpr char m_map[12*24] =
     };
 
 
-Game::Game(){}
+Game::Game(){
+  m_player = std::make_shared<Player>(this);
+  m_viewport = std::make_shared<ViewPort>(this);
+}
 
 void Game::update(){
+  m_viewport->update();
+  bool up = WindowMgr::get_instance().is_key_pressed(SDLK_UP);
+  bool down = WindowMgr::get_instance().is_key_pressed(SDLK_DOWN);
+  bool left = WindowMgr::get_instance().is_key_pressed(SDLK_LEFT);
+  bool right = WindowMgr::get_instance().is_key_pressed(SDLK_RIGHT);
 
+  if(up) m_py_offset--;
+  if(down) m_py_offset++;
+  if(left) m_px_offset--;
+  if(right) m_px_offset++;
 }
 
 void Game::render(){
+  m_viewport->render();
   Renderer* r = WindowMgr::get_instance().get_renderer();
 
 
@@ -51,8 +64,8 @@ void Game::render(){
     }
   }
 
-  int x1 = 32 * 4;
-  int y1 = 32 * 7;
+  int x1 = 32 + m_px_offset;
+  int y1 = 32 + m_py_offset;
   int mx = WindowMgr::get_instance().get_mouse_pos().first;
   int my = WindowMgr::get_instance().get_mouse_pos().second;
 
@@ -72,8 +85,8 @@ void Game::render(){
   {
     float dy = step * sin((double)a * 3.145 / 180.0);
     float dx = step * cos((double)a * 3.145 / 180.0);
-    x = 32 * 4;
-    y = 32 * 7;
+    x = 32 + m_px_offset;
+    y = 32 + m_py_offset;
     for(float i = 0.0f; i < MAX_RAY_LEN; i += step)
     {
       x += dx;

@@ -59,20 +59,30 @@ void Renderer::draw_string(int x, int y, std::string text, int color, int scale)
   int b = (color & 0xFF);
 
   SDL_SetTextureColorMod(m_ui_font_textures->texture, r, g, b);
+  int x_off = x;
+  int y_off = y;
+  int step = m_ui_font_textures->pw * scale;
 
   // std::transform(text.begin(), text.end(), text.begin(), ::toupper);
-  for (int i = 0; i < text.length(); i++)
+  for(auto it = text.begin(); it != text.end(); it++)
   {
-    int index = font_chars.find((char)text[i]);
+    char c = (char) *it;
+    if(c == '\n')
+    {
+      x_off = x;
+      y_off += step + 4;
+    }
+
+    int index = font_chars.find(c);
     if (index >= 0)
     {
       int y_offset = 0;
-      if (text[i] == 'p' || text[i] == 'g' || text[i] == 'y' || text[i] == 'q')
+      if (c == 'p' || c == 'g' || c == 'y' || c == 'q')
       {
         y_offset = 1;
       }
-      m_ui_font_textures->render(
-          (SDL_Renderer *)m_sdl_renderer, index, x + i * (m_ui_font_textures->pw * scale), y + y_offset, scale, 32);
+      m_ui_font_textures->render((SDL_Renderer *)m_sdl_renderer, index, x_off, y_off + y_offset, scale, 32);
+      x_off += step;
     }
   }
 }
