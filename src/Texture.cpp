@@ -42,3 +42,28 @@ void Texture::render(SDL_Renderer *renderer, int index, int x, int y, int scale,
 
   SDL_RenderCopy(renderer, texture, &spriteTile, &dst);
 }
+
+int Texture::get_pixel(SDL_Renderer *renderer, int tile, int col_x, int y, int rowa)
+{
+  int width, height;
+  SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+  
+  SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
+  if (!surface) {
+      SDL_Log("Unable to create surface: %s", SDL_GetError());
+      return 0;
+  }
+
+  if (SDL_RenderReadPixels(renderer, nullptr, surface->format->format, surface->pixels, surface->pitch) != 0) {
+      SDL_Log("Unable to read pixels from renderer: %s", SDL_GetError());
+      SDL_FreeSurface(surface);
+      return 0;
+  }
+
+  Uint32* pixels = (Uint32*)surface->pixels;
+  Uint32 pixel = pixels[(y * surface->w) + col_x];
+
+//  SDL_FreeSurface(surface);
+  return pixel;
+
+}

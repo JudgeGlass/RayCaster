@@ -8,6 +8,13 @@
 #include "Game/Player.hpp"
 #include "Game/Viewport.hpp"
 
+enum Face {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST
+};
+
 class ViewPort;
 class Game {
   public:
@@ -17,6 +24,8 @@ class Game {
     void render();
 
     void draw_rect(const int x, const int y, const int w, const int h);
+
+    void draw_view_line(int pos, double percent, int color, int texture_col);
 
   private:
     const int MAP_WIDTH = 12;

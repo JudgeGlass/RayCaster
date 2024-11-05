@@ -56,12 +56,21 @@ void WindowMgr::loop()
 {
   while (m_loop)
   {
+    int start = SDL_GetTicks();
+    int startFps = SDL_GetPerformanceCounter();   
+
     sdl_event();
     update();
     render();
 
     m_mouse1_pressed = false;
     set_all_key_states(false);
+
+    int end = SDL_GetTicks();
+    float elapsedMS = (end - start) / (float) SDL_GetPerformanceFrequency() * 1000.0f;
+    SDL_Delay(6.66666f - elapsedMS);
+    int endFps = SDL_GetPerformanceCounter();
+    fps = 1 / ((endFps - startFps) / (float)SDL_GetPerformanceFrequency());
   }
 }
 

@@ -28,6 +28,7 @@ void ViewPort::debug(){
 
   std::stringstream ss;
   ss << "RayCaster v0.0.1\n";
+  ss << "FPS: " << (float) window_manager->fps << "\n";
   ss << "MX: " << mouse_x << " MY: " << mouse_y << "\n";
 
   renderer->draw_string(start_x, start_y, ss.str(), 0xFFFFFF, 1);

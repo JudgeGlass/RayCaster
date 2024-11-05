@@ -22,6 +22,7 @@ public:
   void draw_string(int x, int y, std::string text, int color, int scale);
   void draw_string_shadowed(int x, int y, std::string text, int color, int scale);
   void draw_line(const int x1, const int y1, const int x2, const int y2);
+  int get_texture_pixel(int tile, int col_x, int y, int rowa);
 
   const SDL_Renderer *get_sdl_renderer() const;
 
@@ -33,6 +34,7 @@ private:
   const SDL_Renderer *m_sdl_renderer;
   std::unique_ptr<Texture> m_ui_textures;
   std::unique_ptr<Texture> m_ui_font_textures;
+  std::unique_ptr<Texture> m_block_textures;
 
 private:
 };

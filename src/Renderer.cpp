@@ -8,6 +8,9 @@ Renderer::Renderer(const SDL_Window *window, const SDL_Renderer *renderer)
 
   m_ui_font_textures = std::make_unique<Texture>("./res/fontAtlas.png", 8, 8);
   m_ui_font_textures->load((SDL_Renderer *)m_sdl_renderer);
+
+  m_block_textures = std::make_unique<Texture>("./res/atlas.png", 32, 32);
+  m_block_textures->load((SDL_Renderer *)m_sdl_renderer);
 }
 
 void Renderer::render_color(const uint8_t r, const uint8_t g, const uint8_t b)
@@ -96,4 +99,9 @@ void Renderer::draw_string_shadowed(int x, int y, std::string text, int color, i
 const SDL_Renderer *Renderer::get_sdl_renderer() const
 {
   return m_sdl_renderer;
+}
+
+int Renderer::get_texture_pixel(int tile, int col_x, int y, int rowa)
+{
+  return m_block_textures->get_pixel((SDL_Renderer *)m_sdl_renderer, tile, col_x, y, rowa);
 }
